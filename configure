@@ -7,7 +7,7 @@ chown $USER:$USER *.sh
 
 chmod 0644 systemd/vpnKillSwitch.service
 chmod 744 vpnKillSwitch/*
-cp vpnKillSwitch.service /etc/systemd/system
+cp systemd/vpnKillSwitch.service /etc/systemd/system
 cp -R vpnKillSwitch /etc/
 systemctl daemon-reload
 systemctl enable vpnKillSwitch.service
