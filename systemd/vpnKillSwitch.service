@@ -9,8 +9,7 @@ Type=oneshot
 ExecStart=/etc/vpnKillSwitch/vpn-kill-switch.sh
 ExecReload=/etc/vpnKillSwitch/firewall-reload.sh
 ExecStop=/etc/vpnKillSwitch/firewall-down.sh
-#EnvironmentFile=/etc/vpnKillSwitch/env
-#Environment=tunnel=%i
+EnvironmentFile=/etc/vpnKillSwitch/env
 RemainAfterExit=yes
 
 [Install]

@@ -8,6 +8,11 @@ error() {
         exit 1;
 }
 
+if [ "$EUID" -ne 0 ]; then
+	echo "Sorry, you need to run this as root"
+	exit 1
+fi
+
 if [ ! -z "$3" ]; then
         echo "too many arguements"
 	error
@@ -61,7 +66,20 @@ for fpath in /etc/wireguard/*.conf; do
 	fi
 done
 
+#if [[ $ENV_PERSIST == 'y' ]]; then
+#	echo "
+#	systemctl enable wg-quick@$filename:
+#	--------------------------------------------------------------------
+#	" >> $logfile 2>&1
+#	systemctl enable "wg-quick@$filename" >> $logfile 2>&1
+#	systemctl daemon-reload 
+#	systemctl start "wg-quick@$filename" >> $logfile 2>&1
+#else
+#	wg-quick up "$path" >> $logfile 2>&1
+#fi
+
 if [[ $ENV_PERSIST == 'y' ]]; then
+
 	echo "
 	systemctl enable wg-quick@$filename:
 	--------------------------------------------------------------------
@@ -69,24 +87,24 @@ if [[ $ENV_PERSIST == 'y' ]]; then
 	systemctl enable "wg-quick@$filename" >> $logfile 2>&1
 	systemctl daemon-reload 
 	systemctl start "wg-quick@$filename" >> $logfile 2>&1
-else
-	wg-quick up "$path" >> $logfile 2>&1
-fi
+#	systemctl set-environment tunnel="$filename"
 
-if [[ $ENV_PERSIST == 'y' ]]; then
-
-	systemctl set-environment tunnel="$filename"
+	# Update vpnKillSwitch service environment variable
+	sed -i "/tunnel=/c\tunnel=\"$filename\"" /etc/vpnKillSwitch/env
 	echo "
 	systemctl environment variables:
 	--------------------------------------------------------------------
 	" >> $logfile 2>&1
 	systemctl show-environment >> $logfile 2>&1
 
-	systemctl stop vpnKillSwitch.service >> $logfile 2>&1
-	systemctl start vpnKillSwitch.service >> $logfile 2>&1
-	systemctl unset-environment tunnel
+	systemctl reload vpnKillSwitch.service >> $logfile 2>&1
 	/sbin/iptables -nL >> $logfile 2>&1
 else
+	echo "
+	wg-quick up $path
+	--------------------------------------------------------------------
+	" >> $logfile 2>&1
+	wg-quick up "$path" >> $logfile 2>&1
 	echo "
 	non persistant firewall
 	--------------------------------------------------------------------
@@ -95,4 +113,7 @@ else
 	tunnel="$filename"
 	exec /etc/vpnKillSwitch/firewall-reload.sh >> $logfile 2>&1
 fi
+
+#show active vpn clients
+wg show interfaces
 
