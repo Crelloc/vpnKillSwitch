@@ -61,7 +61,7 @@ for fpath in /etc/wireguard/*.conf; do
 		" >> $logfile 2>&1
 		systemctl stop "wg-quick@$fName" >> $logfile 2>&1
 		systemctl disable "wg-quick@$fName" >> $logfile 2>&1
-        	systemctl daemon-reload
+        systemctl daemon-reload
 		systemctl reset-failed
 	fi
 done
@@ -89,17 +89,17 @@ if [[ $ENV_PERSIST == 'y' ]]; then
 	/sbin/iptables -nL >> $logfile 2>&1
 else
 	echo "
-	wg-quick up $path
+	wg-quick up "/etc/wireguard/$filename.conf"
 	--------------------------------------------------------------------
 	" >> $logfile 2>&1
-	wg-quick up "$path" >> $logfile 2>&1
+	wg-quick up "/etc/wireguard/$filename.conf" >> $logfile 2>&1
 	echo "
 	non persistant firewall
 	--------------------------------------------------------------------
 	" >> $logfile 2>&1
 
-	tunnel="$filename"
-	exec /etc/vpnKillSwitch/firewall-reload.sh >> $logfile 2>&1
+	export tunnel="$filename"
+	bash /etc/vpnKillSwitch/firewall-reload.sh >> $logfile 2>&1
 fi
 
 #show active vpn clients
