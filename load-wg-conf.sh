@@ -66,17 +66,6 @@ for fpath in /etc/wireguard/*.conf; do
 	fi
 done
 
-#if [[ $ENV_PERSIST == 'y' ]]; then
-#	echo "
-#	systemctl enable wg-quick@$filename:
-#	--------------------------------------------------------------------
-#	" >> $logfile 2>&1
-#	systemctl enable "wg-quick@$filename" >> $logfile 2>&1
-#	systemctl daemon-reload 
-#	systemctl start "wg-quick@$filename" >> $logfile 2>&1
-#else
-#	wg-quick up "$path" >> $logfile 2>&1
-#fi
 
 if [[ $ENV_PERSIST == 'y' ]]; then
 
@@ -87,7 +76,6 @@ if [[ $ENV_PERSIST == 'y' ]]; then
 	systemctl enable "wg-quick@$filename" >> $logfile 2>&1
 	systemctl daemon-reload 
 	systemctl start "wg-quick@$filename" >> $logfile 2>&1
-#	systemctl set-environment tunnel="$filename"
 
 	# Update vpnKillSwitch service environment variable
 	sed -i "/tunnel=/c\tunnel=\"$filename\"" /etc/vpnKillSwitch/env
