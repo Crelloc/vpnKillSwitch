@@ -1,0 +1,18 @@
+[Unit]
+Description=iptables rules for vpn
+Before=network-pre.target docker.service wg-quick.target
+Wants=network-pre.target docker.service wg-quick.target 
+Conflicts=ufw.service docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/etc/vpnKillSwitch/vpn-kill-switch.sh
+ExecReload=/etc/vpnKillSwitch/firewall-reload.sh
+ExecStop=/etc/vpnKillSwitch/firewall-down.sh
+#EnvironmentFile=/etc/vpnKillSwitch/env
+#Environment=tunnel=%i
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+~                                                      
