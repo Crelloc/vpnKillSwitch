@@ -1,20 +1,42 @@
+### Motivation
+I have multiple vpn servers in multiple locations and i needed
+to dynamically load my firewall when i change my wireguard
+configuration to use a vpn location.
+
+To keep my connection location and browsing secure, I implemented a [vpn kill switch](https://www.pcmag.com/explainers/what-is-a-vpn-kill-switch-and-how-does-it-work).
+
+
+### Prereqs:
+- Install wireguard (wg) server and generate your client config files
+    - Configure wg server: https://github.com/Nyr/wireguard-install
+- Download your client config files and move them to /etc/wireguard directory
+    - Install wg client on Linux: https://www.makeuseof.com/how-to-install-wireguard-vpn-client/
+
 ### Download code
 ```bash
 git clone https://github.com/Crelloc/vpnKillSwitch.git
 ```
 
 ### install vpn kill switch firewall in linux
-synopsis: ./configure
+synopsis:
+```
+sudo ./configure 
+```
 
 ### load wireguard configuration
-synopsis: ./load-wg-conf.sh [wg config name] [persistent after boot (optional): [y|n]]
+synopsis: sudo ./load-wg-conf.sh [wg config name] [persistent after boot (optional): [y|n]]
 
-example 1: ./load-wg-conf.sh wg0 y
+example 1: 
+```bash
+sudo ./load-wg-conf.sh wg0 y
+```
 
-example 2: ./load-wg-conf.sh wg0.conf n
+example 2:
+```bash
+sudo ./load-wg-conf.sh wg0.conf n
+```
 
-example 2a: ./load-wg-conf.sh wg0
-
-### Note:
--edit ./configure script if you want to disable ipv6
--make sure to edit firewall file (vpnKillSwitch/vpn-kill-switch.sh) for you specific network devices
+example 2a:
+```bash
+sudo ./load-wg-conf.sh wg0
+```
