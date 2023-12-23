@@ -8,8 +8,11 @@ synopsis: ./configure
 
 ### load wireguard configuration
 synopsis: ./load-wg-conf.sh [wg config name] [persistent after boot (optional): [y|n]]
+
 example 1: ./load-wg-conf.sh wg0 y
+
 example 2: ./load-wg-conf.sh wg0.conf n
+
 example 2a: ./load-wg-conf.sh wg0
 
 ### Note:
