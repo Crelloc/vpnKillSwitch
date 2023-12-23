@@ -3,6 +3,8 @@
 #Run this after you configure firewall setting in vpnKillSwitch/vpn-kill-switch.sh
 #Enable vpnKillSwitch firewall at boot:
 
+chown $USER:$USER *.sh
+
 chmod 0644 systemd/vpnKillSwitch.service
 chmod 744 vpnKillSwitch/*
 cp vpnKillSwitch.service /etc/systemd/system
