@@ -1,10 +1,17 @@
 ### Motivation
-I have multiple vpn servers in multiple locations and i needed
-to dynamically load my firewall when i change my wireguard
-configuration to use a vpn location.
+I have wireguard vpn servers in multiple locations and i needed
+to dynamically load my firewall every time i change vpn connection for
+my host machine.
 
 To keep my connection location and browsing secure, I implemented a [vpn kill switch](https://www.pcmag.com/explainers/what-is-a-vpn-kill-switch-and-how-does-it-work).
 
+This code:
+    - installs firewall and configures it to start at boot.
+    - installs software to change vpn configuration with the option to set vpn to persistent (start at boot).
+
+### Note:
+- edit ./configure script if you want to disable ipv6
+- make sure to edit firewall file (vpnKillSwitch/vpn-kill-switch.sh) for you specific network devices
 
 ### Prereqs:
 - Install wireguard (wg) server and generate your client config files
