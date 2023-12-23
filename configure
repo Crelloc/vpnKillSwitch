@@ -6,7 +6,8 @@
 chown $USER:$USER *.sh
 
 chmod 0644 systemd/vpnKillSwitch.service
-chmod 744 vpnKillSwitch/*
+chmod 744 vpnKillSwitch/*.sh
+chmod 700 vpnKillSwitch/env
 cp systemd/vpnKillSwitch.service /etc/systemd/system
 cp -R vpnKillSwitch /etc/
 systemctl daemon-reload
