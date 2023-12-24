@@ -27,8 +27,8 @@ if [ -z "$1" ] || [[ ! -z "$2" && ( "$2" != [yY] && "$2" != [yY][eE][sS] && "$2"
 	error
 fi
 
-if [ ! -f "/etc/wireguard/$1.conf" ]; then
-	echo "/etc/wireguard/$1.conf does not exist"
+if [ ! -f "/etc/wireguard/$filename.conf" ]; then
+	echo "/etc/wireguard/$filename.conf does not exist"
 	echo "Available files:"
 	ls /etc/wireguard/*.conf
     exit 1
@@ -81,7 +81,8 @@ if [[ $ENV_PERSIST == 'y' ]]; then
 	" >> $logfile 2>&1
 	systemctl show-environment >> $logfile 2>&1
 
-	systemctl reload vpnKillSwitch.service >> $logfile 2>&1
+	systemctl stop vpnKillSwitch.service >> $logfile 2>&1
+	systemctl start vpnKillSwitch.service >> $logfile 2>&1
 	/sbin/iptables -nL >> $logfile 2>&1
 else
 	echo "
