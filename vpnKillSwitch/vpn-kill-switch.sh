@@ -2,9 +2,14 @@
 #
 # iptables example configuration script
 
-
+#wifi device, use the one that your computer has. run the command: ifconfig
 wdevice=wlx98fc11c3fe80
+#lan device, use the one that your computer has.
+#Note: I only configured the firewall for wifi. if you want to use firewall for your lan then just
+#copy and paste the configuration of the $wdevice and replace it with $ldevice
 ldevice=eno1
+#tunnel variable is used to select which vpn config to use. if tunnel isn't set then
+#defaults to using tun0 network device
 tunnel=${tunnel:-tun0}
 
 # Drop ICMP echo-request messages sent to broadcast or multicast addresses
@@ -82,11 +87,6 @@ echo 1 > /proc/sys/net/ipv4/conf/all/log_martians
 # Some local processes need to talk to other ones.
 /sbin/iptables -A OUTPUT -o lo -j ACCEPT
 
-## Not a router: Can be used to setup raspberry pi wifi  
-#/sbin/iptables -t nat -A POSTROUTING -o $tunnel -j MASQUERADE
-#/sbin/iptables -A FORWARD -i $tunnel -o $wdevice -m state --state RELATED,ESTABLISHED -j ACCEPT
-#/sbin/iptables -A FORWARD -i $wdevice -o $tunnel -j ACCEPT
-##
 
 /sbin/iptables -A OUTPUT -o $tunnel -m comment --comment "vpn" -j ACCEPT
 /sbin/iptables -A OUTPUT -o $wdevice -p icmp -m comment --comment "icmp" -j ACCEPT
