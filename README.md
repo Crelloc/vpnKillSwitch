@@ -25,7 +25,7 @@ git clone https://github.com/Crelloc/vpnKillSwitch.git && cd vpnKillSwitch
 ```
 
 ### Setup
-edit the [env](/vpnKillSwitch/env) to set your default wg client config name (without the .conf extension).
+1. edit the [env](/vpnKillSwitch/env) to set your default wg client config name (without the .conf extension).
 
 if not set then default name would be tun0.
 
@@ -33,10 +33,9 @@ if not set then default name would be tun0.
 tunnel="default_client_name"
 ```
 
-[edit firewall configuration:](/vpnKillSwitch/vpn-kill-switch.sh)
+2. [edit firewall configuration](/vpnKillSwitch/vpn-kill-switch.sh)
 
 ### install vpn kill switch firewall in linux
-synopsis:
 ```
 # Make scripts executable
 chmod +x *.sh
