@@ -31,7 +31,7 @@ tunnel="default_client_name"
 
 2. [edit firewall configuration](/vpnKillSwitch/vpn-kill-switch.sh)
 
-### install vpn kill switch firewall in linux
+### Install vpn kill switch firewall in linux
 ```
 # Make scripts executable
 chmod +x *.sh
@@ -55,7 +55,7 @@ sudo systemctl start vpnKillSwitch.service
 # sudo sysctl -p
 ```
 
-### load wireguard configuration
+### Load wireguard configuration
 synopsis: sudo ./load-wg-conf.sh [wg config name] [persistent after boot (optional): [y|n]]
 
 example 1: 
@@ -72,4 +72,15 @@ example 2a:
 ```bash
 # persistent automatically set to no
 sudo ./load-wg-conf.sh wg0
+```
+### Stop vpnKillSwitch service
+```bash
+# temporarily stop the vpn firewall (open ports / disable firewall) - however will restart at bootup
+sudo systemctl stop vpnKillSwitch.service
+```
+
+### Disable vpnKillSwitch service
+```bash
+# Disable firewall so it won't start at boot up
+sudo systemctl stop vpnKillSwitch.service
 ```
