@@ -9,10 +9,6 @@ This code:
     - installs firewall and configures it to start at boot.
     - installs software to change vpn configuration with the option to set vpn to persistent (start at boot).
 
-### Note:
-- edit ./configure script if you want to disable ipv6
-- make sure to edit firewall file (vpnKillSwitch/vpn-kill-switch.sh) for you specific network devices
-
 ### Prereqs:
 - Install wireguard (wg) server and generate your client config files
     - Configure wg server: https://github.com/Nyr/wireguard-install
@@ -74,5 +70,6 @@ sudo ./load-wg-conf.sh wg0.conf n
 
 example 2a:
 ```bash
+# persistent automatically set to no
 sudo ./load-wg-conf.sh wg0
 ```
