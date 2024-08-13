@@ -32,14 +32,17 @@ tunnel="default_client_name"
 2. [edit firewall configuration](/vpnKillSwitch/vpn-kill-switch.sh)
 
 ### Install vpn kill switch firewall in linux
+
+## From vpnKillSwitch directory (folder)
+
 ```
 # Make scripts executable
-chmod +x *.sh
+chmod +x *.sh && chmod +x vpnKillSwitch/*.sh
 
 # Set correct file permissions
 chmod 0644 systemd/vpnKillSwitch.service
 chmod 744 vpnKillSwitch/*.sh
-chmod 700 vpnKillSwitch/env
+chmod 600 vpnKillSwitch/env
 
 # Enable and start wg vpn firewall at boot
 sudo cp systemd/vpnKillSwitch.service /etc/systemd/system
@@ -48,7 +51,10 @@ sudo systemctl daemon-reload
 sudo systemctl enable vpnKillSwitch.service
 sudo systemctl start vpnKillSwitch.service
 
-# If you want to disable ipv6, uncomment commands below:
+# If you want to disable ipv6, run commands below:
+# if you disable ipv6 make sure to REMOVE ipv6 address from your wireguard configuration file
+# that's located in "/etc/wireguard", otherwise connection will not work properly.
+
 # echo 'net.ipv6.conf.all.disable_ipv6=1' | sudo tee -a /etc/sysctl.conf
 # echo 'net.ipv6.conf.default.disable_ipv6=1' | sudo tee -a /etc/sysctl.conf
 # echo 'net.ipv6.conf.lo.disable_ipv6=1' | sudo tee -a /etc/sysctl.conf
